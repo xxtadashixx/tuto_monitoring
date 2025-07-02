@@ -1,4 +1,4 @@
-# 🚀 Projet Tutoriel de Monitoring avec Prometheus, Grafana, Node Exporter et Blackbox Exporter
+# 🚀 Tutoriel de Monitoring avec Prometheus, Grafana, Node Exporter et Blackbox Exporter
 
 > Un template simple et complet pour surveiller un serveur EC2 AWS et des sites web avec Prometheus & Grafana.
 
@@ -7,31 +7,38 @@
 ## 📋 Objectifs
 
 - 📡 Surveiller un serveur **EC2 Linux** via **Node Exporter**
-- 🌐 Surveiller des **sites web** avec **Blackbox Exporter**
-- 📊 Visualiser le tout dans **Grafana**
-- 🐳 Utiliser **Docker Compose** pour un déploiement rapide
+- 🌐 Surveiller des **sites web** via **Blackbox Exporter**
+- 📊 Visualiser les métriques dans **Grafana**
+- 🐳 Utiliser **Docker Compose** pour tout déployer rapidement
 
 ---
 
 ## 🧰 Prérequis
 
-- Docker & Docker Compose installés
+- Docker et Docker Compose installés
 - Un serveur EC2 Linux (Ubuntu recommandé)
-- Git
+- Git installé localement
 
 ---
 
 ## 📂 Arborescence du projet
+
+\`\`\`
 monitoring-project/
 ├── docker-compose.yml
 ├── prometheus/
-│ ├── prometheus.yml
-│ └── blackbox.yml
+│   ├── prometheus.yml
+│   └── blackbox.yml
 └── grafana/
+\`\`\`
 
-⚙️ Étape 2 : Configuration de Prometheus
-📁 prometheus/prometheus.yml
+---
 
+## ⚙️ Étape 1 : Configuration de Prometheus
+
+### 📁 prometheus/prometheus.yml
+
+\`\`\`yaml
 global:
   scrape_interval: 15s
 
@@ -59,62 +66,108 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: blackbox:9115
+\`\`\`
 
-📁 prometheus/blackbox.yml
+---
 
+### 📁 prometheus/blackbox.yml
+
+\`\`\`yaml
 modules:
   http_2xx:
     prober: http
     timeout: 5s
     http:
       method: GET
+\`\`\`
 
-⚙️ Étape 3 : Lancer les services avec Docker Compose
+---
+
+## ⚙️ Étape 2 : Lancer les services avec Docker Compose
+
+\`\`\`bash
 docker-compose up -d
+\`\`\`
 
-Prometheus : http://localhost:9090
+📌 Accès aux services :
 
-Grafana : http://localhost:3000 (login: admin / admin)
+- Prometheus → http://localhost:9090
+- Grafana → http://localhost:3000 (login: `admin` / `admin`)
+- Node Exporter → http://localhost:9100/metrics
+- Blackbox Exporter → http://localhost:9115/probe
 
-Node Exporter : http://localhost:9100/metrics
+---
 
-Blackbox Exporter : http://localhost:9115/probe
+## ⚙️ Étape 3 : Installer Node Exporter sur l’EC2
 
-⚙️ Étape 4 : Installer Node Exporter sur votre EC2
-Connectez-vous à votre instance EC2 :
+Connectez-vous à votre serveur EC2 :
+
+\`\`\`bash
 ssh ubuntu@<IP_EC2>
-Puis installez Node Exporter :
+\`\`\`
+
+Puis installez et lancez Node Exporter :
+
+\`\`\`bash
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
 tar xvf node_exporter-*.tar.gz
 cd node_exporter-*
 ./node_exporter &
+\`\`\`
 
-🎯 Astuce : pour rendre ce service permanent, créez un service systemd (non obligatoire pour le test rapide)
-📈 Étape 5 : Configuration de Grafana
+💡 *Astuce : pour un lancement automatique, vous pouvez créer un service systemd.*
 
-1-Accédez à http://localhost:3000
-2-Identifiants par défaut : admin / admin
-3-Ajoutez une source de données Prometheus :
-4-URL : http://prometheus:9090
-5-Importez des dashboards :
-6-Node Exporter Full : ID 1860
-7- Blackbox Exporter : ID 7587
+---
 
+## 📈 Étape 4 : Configuration de Grafana
 
-✅ Vérification
+1. Accédez à Grafana : http://localhost:3000  
+2. Identifiants par défaut : `admin / admin`  
+3. Ajoutez une nouvelle source de données :
+   - Type : **Prometheus**
+   - URL : `http://prometheus:9090`  
+4. Importez des dashboards :
+   - **Node Exporter Full** : ID `1860`
+   - **Blackbox Exporter** : ID `7587`
 
-Si tout est OK, vous verrez :
-Des métriques système de votre EC2 dans Grafana
-des statuts UP/DOWN des sites web surveillés
-Vous pouvez tester une panne en arrêtant Node Exporter sur EC2 : 
+---
 
+## ✅ Étape 5 : Vérification
+
+✔️ Si tout fonctionne, vous devriez voir :
+- Les **métriques système** (CPU, RAM, disque) de votre EC2
+- Le **statut UP/DOWN** des sites web surveillés
+
+🧪 Pour tester une panne :
+
+\`\`\`bash
 pkill node_exporter
+\`\`\`
 
-📦 Ports utilisés
+→ Observez l’impact dans Prometheus ou Grafana.
+
+---
+
+## 📦 Ports utilisés
+
 | Service             | Port |
-| ------------------- | ---- |
+|---------------------|------|
 | Prometheus          | 9090 |
 | Node Exporter (EC2) | 9100 |
 | Blackbox Exporter   | 9115 |
 | Grafana             | 3000 |
 
+---
+
+## 🧠 Bonus
+
+- Ajouter des alertes (Prometheus alertmanager ou Grafana alerting)
+- Intégration Slack/Email
+- Déploiement multi-serveurs
+- Supervision de base de données, Nginx, Docker, etc.
+
+---
+
+## 📝 Licence
+
+Projet open-source sous licence **MIT** – utilisez-le librement à des fins éducatives ou professionnelles.
