@@ -30,8 +30,8 @@ corrige ce readme pour une vision meilleur
   │ └── blackbox.yml
   └── grafana/
 
-##⚙️ Étape 2 : Configuration de Prometheus
-##📁 prometheus/prometheus.yml
+## ⚙️ Étape 2 : Configuration de Prometheus
+## 📁 prometheus/prometheus.yml
 
     global:
       scrape_interval: 15s
@@ -61,7 +61,7 @@ corrige ce readme pour une vision meilleur
         - target_label: __address__
           replacement: blackbox:9115
 
-##📁 prometheus/blackbox.yml
+## 📁 prometheus/blackbox.yml
 
     modules:
       http_2xx:
@@ -70,7 +70,7 @@ corrige ce readme pour une vision meilleur
         http:
           method: GET
 
-##⚙️ Étape 3 : Lancer les services avec Docker Compose
+## ⚙️ Étape 3 : Lancer les services avec Docker Compose
 ###docker-compose up -d
 
 Prometheus : http://localhost:9090
@@ -81,23 +81,23 @@ Node Exporter : http://localhost:9100/metrics
 
 Blackbox Exporter : http://localhost:9115/probe
 
-##⚙️ Étape 4 : Installer Node Exporter sur votre EC2
+## ⚙️ Étape 4 : Installer Node Exporter sur votre EC2
 Connectez-vous à votre instance EC2 :
 
-###ssh ubuntu@<IP_EC2>
+### ssh ubuntu@<IP_EC2>
 Puis installez Node Exporter :
 
-###wget https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
+### wget https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
 
-###tar xvf node_exporter-*.tar.gz
+### tar xvf node_exporter-*.tar.gz
 
-###cd node_exporter-*
+### cd node_exporter-*
 
-###./node_exporter &
+### ./node_exporter &
 
 
-###🎯 Astuce : pour rendre ce service permanent, créez un service systemd (non obligatoire pour le test rapide)
-##📈 Étape 5 : Configuration de Grafana
+### 🎯 Astuce : pour rendre ce service permanent, créez un service systemd (non obligatoire pour le test rapide)
+## 📈 Étape 5 : Configuration de Grafana
 
 1-Accédez à http://localhost:3000
 2-Identifiants par défaut : admin / admin
@@ -108,7 +108,7 @@ Puis installez Node Exporter :
 7- Blackbox Exporter : ID 7587
 
 
-##✅ Vérification
+## ✅ Vérification
 
 Si tout est OK, vous verrez :
 Des métriques système de votre EC2 dans Grafana
@@ -116,10 +116,10 @@ des statuts UP/DOWN des sites web surveillés
 Vous pouvez tester une panne en arrêtant Node Exporter sur EC2 : 
 
 
-###pkill node_exporter
+### pkill node_exporter
 
 
-##📦 Ports utilisés
+## 📦 Ports utilisés
 | Service             | Port |
 | ------------------- | ---- |
 | Prometheus          | 9090 |
