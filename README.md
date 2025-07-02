@@ -23,12 +23,13 @@ corrige ce readme pour une vision meilleur
 ---
 
 ## 📂 Arborescence du projet
-  monitoring-project/
-  ├── docker-compose.yml
-  ├── prometheus/
-  │ ├── prometheus.yml
-  │ └── blackbox.yml
-  └── grafana/
+
+monitoring-project/    
+├── docker-compose.yml
+├── prometheus/
+│ ├── prometheus.yml
+│ └── blackbox.yml
+└── grafana/
 
 ## ⚙️ Étape 2 : Configuration de Prometheus
 ## 📁 prometheus/prometheus.yml
