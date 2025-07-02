@@ -71,7 +71,7 @@ corrige ce readme pour une vision meilleur
           method: GET
 
 ## ⚙️ Étape 3 : Lancer les services avec Docker Compose
-###docker-compose up -d
+### docker-compose up -d
 
 Prometheus : http://localhost:9090
 
