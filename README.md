@@ -158,16 +158,3 @@ pkill node_exporter
 | Grafana             | 3000 |
 
 ---
-
-## 🧠 Bonus
-
-- Ajouter des alertes (Prometheus alertmanager ou Grafana alerting)
-- Intégration Slack/Email
-- Déploiement multi-serveurs
-- Supervision de base de données, Nginx, Docker, etc.
-
----
-
-## 📝 Licence
-
-Projet open-source sous licence **MIT** – utilisez-le librement à des fins éducatives ou professionnelles.
